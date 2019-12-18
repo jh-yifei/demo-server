@@ -1,4 +1,4 @@
-package com.yifei.demoserver;
+package com.yifei.demo;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
