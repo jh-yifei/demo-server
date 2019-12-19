@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yifei.demo.dao.AaaMapper" >
+  <resultMap id="BaseResultMap" type="com.yifei.demo.domain.Aaa" >
+    <id column="aaa_id" property="aaaId" jdbcType="INTEGER" />
+    <result column="aa_name" property="aaName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    aaa_id, aa_name
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sys_aaa
+    where aaa_id = #{aaaId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sys_aaa
+    where aaa_id = #{aaaId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.yifei.demo.domain.Aaa" >
+    <selectKey resultType="java.lang.Integer" keyProperty="aaaId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_aaa (aa_name)
+    values (#{aaName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.yifei.demo.domain.Aaa" >
+    <selectKey resultType="java.lang.Integer" keyProperty="aaaId" order="AFTER" >
+      SELECT LAST_INSERT_ID()
+    </selectKey>
+    insert into sys_aaa
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="aaName != null" >
+        aa_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="aaName != null" >
+        #{aaName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.yifei.demo.domain.Aaa" >
+    update sys_aaa
+    <set >
+      <if test="aaName != null" >
+        aa_name = #{aaName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where aaa_id = #{aaaId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.yifei.demo.domain.Aaa" >
+    update sys_aaa
+    set aa_name = #{aaName,jdbcType=VARCHAR}
+    where aaa_id = #{aaaId,jdbcType=INTEGER}
+  </update>
+</mapper>
